@@ -105,6 +105,12 @@
 		  			}
 		  			else {
 		  				secretAccess($secretID);
+		  				$liveAccessCount = checkAccessCount($secretID);
+
+		  				if ($liveAccessCount < 1)
+		  				{
+		  					removeSecret($secretID);
+		  				}
 		  	?>
 				  		<div class="card">
 							<div class="card-body">
@@ -143,6 +149,7 @@
 							<h5 class="card-title">Share password</h5>
 							<input class="form-control" type="text" name="secret" value="<?php echo $seret_url; ?>" readonly>
 
+							<br>
 							<button style="float:right" onclick="setClipboard('<?php echo $seret_url; ?>')" class="btn btn-primary"><p id="copy_secret">Copy&nbsp;&nbsp;<i class="far fa-clone"></i></p></button>
 					
 						</div>
