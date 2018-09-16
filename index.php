@@ -1,6 +1,6 @@
 <?php
 	session_start();
-	include("../config.php");
+	include("config.php");
 	include("lib.php");
 
 	$error = "This password has expired or has been viewed the maximum amount of times and is no longer available.";
@@ -14,7 +14,7 @@
 		$fileCount = $dbQuery->rowCount();
 
 		if ($fileCount < 1) {
-			header("Location: ../pw?error=" . $error);
+			header("Location: ?error=" . $error);
 		}
 		
 		$dbRow=$dbQuery->fetch(PDO::FETCH_ASSOC);
@@ -24,7 +24,7 @@
 		$accessCount = $dbRow["access_count"];
 
 		if ($accessCount < 1) {
-			header("Location: ../pw?error=" . $error);
+			header("Location: ?error=" . $error);
 		}
 
 	}
@@ -39,7 +39,7 @@
 		$dbParams = array('secret'=>$newSecret, 'hash'=>$hash, 'attempts'=>$attempts, 'time'=>$time, 'expirytime'=>$expiryTime);
 		$dbQuery->execute($dbParams);
 
-		header("Location: ../pw?status=success&hash=" . $hash);
+		header("Location: ?status=success&hash=" . $hash);
 	}
 		
 ?>
@@ -61,7 +61,7 @@
 		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.1/css/all.css" integrity="sha384-O8whS3fhG2OnA5Kas0Y9l3cfpmYjapjI0E4theH4iuMD+pLhbf6JI0jIMfYcK3yZ" crossorigin="anonymous">
 
 		<!-- DK CSS -->
-		<link href="../css/styles.css" rel="stylesheet">
+		<link href="css/styles.css" rel="stylesheet">
 
 		<script>
 			function setClipboard(value) {
@@ -81,7 +81,7 @@
 
 		<div class="container" style="padding-top: 20px;">
 			<nav class="navbar navbar-expand-lg navbar-light bg-light">
-				<a class="navbar-brand" href="../">SharePass</a>
+				<a class="navbar-brand" href="#">SharePass</a>
 				<ul class="navbar-nav mr-auto">
 				</ul>
 		  	</nav>
@@ -101,7 +101,7 @@
 		  		if (isset($secret) && isset($_POST["access"]) && $_POST["access"] == 1) {
 		  			if (!empty($_POST["email"])) {
 		  				$error = "Password access error, please try again.";
-		  				echo "<script>window.location.href = '../pw?error=".$error."'</script>";
+		  				echo "<script>window.location.href = '?error=".$error."'</script>";
 		  			}
 		  			else {
 		  				secretAccess($secretID);
@@ -136,7 +136,7 @@
 		 	<?php
 		  		}
 		  		else if (isset($_GET["status"]) && $_GET["status"] == "success") {
-		  			$seret_url = "http://secure.dylankeys.com/pw?id=".$_GET['hash'];
+		  			$seret_url = "http://sharepass.dylankeys.com/?id=".$_GET['hash'];
 		  		?>
 			  		<div class="card">
 						<div class="card-body">
